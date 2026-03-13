@@ -1,4 +1,5 @@
 .scoreboard {
+  max-width: 100%;
   width: 380px;
   margin: 20px auto;
   border: 2px solid #ccc;
@@ -7,6 +8,15 @@
   background: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
+  box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+  .scoreboard {
+    width: 95%;
+    margin: 10px auto;
+    padding: 8px;
+  }
 }
 
 .header {
@@ -15,6 +25,18 @@
   background: #e8b3e6;
   padding: 5px;
   border-radius: 6px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 400px) {
+  .header {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .header > div {
+    flex: 1;
+    text-align: center;
+  }
 }
 
 .team {
@@ -31,7 +53,7 @@
   border-radius: 4px;
 }
 
-.score, .overs {
+.score {
   background: #e6a8d7;
   padding: 6px 10px;
   border-radius: 4px;
@@ -41,9 +63,21 @@
 .batter-section .batter {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 6px 0;
   padding: 6px;
   border-radius: 4px;
+}
+
+@media (max-width: 400px) {
+  .batter-section .batter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .batter .stats {
+    align-self: flex-end;
+  }
 }
 
 .batter.active {
@@ -58,6 +92,14 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  align-items: center;
+}
+
+@media (max-width: 400px) {
+  .bowling-section {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .ball {
@@ -69,6 +111,15 @@
   border-radius: 50%;
   line-height: 28px;
   margin-right: 4px;
+}
+
+@media (max-width: 400px) {
+  .ball {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 2px;
+  }
 }
 
 .out-box {
@@ -91,11 +142,27 @@
   margin-top: 10px;
 }
 
+@media (max-width: 400px) {
+  .extras, .runs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .extras button, .runs button {
   padding: 10px;
   border: none;
   border-radius: 6px;
   font-weight: bold;
+  font-size: 16px;
+  min-height: 44px; /* For touch targets */
+}
+
+@media (max-width: 400px) {
+  .extras button, .runs button {
+    padding: 8px;
+    font-size: 14px;
+    min-height: 40px;
+  }
 }
 
 .wd { background: #ffc107; }
@@ -114,4 +181,14 @@
   border: none;
   border-radius: 6px;
   font-weight: bold;
+  font-size: 16px;
+  min-height: 44px;
+}
+
+@media (max-width: 400px) {
+  .over-end button {
+    padding: 8px;
+    font-size: 14px;
+    min-height: 40px;
+  }
 }

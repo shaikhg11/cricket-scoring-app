@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BatterSelectDialogComponent } from '../batter-select-dialog/batter-select-dialog.component';
 import { BowlerSelectDialogComponent } from '../bowler-select-dialog/bowler-select-dialog.component';
 import { NameCustomizeDialogComponent } from '../name-customize-dialog/name-customize-dialog.component';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-scoreboard',
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.css']
 })
-export class ScoreboardComponent {
+export class ScoreboardComponent implements OnInit, OnDestroy {
   team = 'Team A';
   runs = 0;
   wickets = 0;
@@ -25,9 +26,32 @@ export class ScoreboardComponent {
   availableBowlers = ['Bowler 1', 'Bowler 2', 'Bowler 3', 'Bowler 4', 'Bowler 5', 'Bowler 6', 'Bowler 7', 'Bowler 8', 'Bowler 9', 'Bowler 10', 'Bowler 11'];
   availableBatters = ['Batter 3', 'Batter 4', 'Batter 5', 'Batter 6', 'Batter 7', 'Batter 8', 'Batter 9', 'Batter 10', 'Batter 11'];
 
-  constructor(private dialog: MatDialog) {}
+  private currentMatchId: number | null = null;
+  private saveTimer: any;
 
-  addRuns(runs: number) {
+  constructor(private dialog: MatDialog, private databaseService: DatabaseService) {}
+
+  async ngOnInit() {
+    // Start a new match
+    this.currentMatchId = await this.databaseService.saveMatch({
+      team: this.team,
+      runs: this.runs,
+      wickets: this.wickets,
+      overs: this.overs
+    });
+
+    // Auto-save every 30 seconds
+    this.saveTimer = setInterval(() => this.saveCurrentState(), 30000);
+  }
+
+  ngOnDestroy() {
+    if (this.saveTimer) {
+      clearInterval(this.saveTimer);
+    }
+    this.saveCurrentState();
+  }
+
+  async addRuns(runs: number) {
     this.runs += runs;
     this.striker.runs += runs;
     this.striker.balls++;
@@ -37,13 +61,15 @@ export class ScoreboardComponent {
 
     this.addBallSymbol(runs.toString());
     this.checkOverEnd();
+    await this.saveBall(runs.toString());
   }
 
-  addWicket() {
+  async addWicket() {
     this.wickets++;
     this.ballsInCurrentOver++;
     this.addBallSymbol('W');
     this.checkOverEnd();
+    await this.saveBall('W');
 
     const dialogRef = this.dialog.open(BatterSelectDialogComponent, {
       width: '300px',
@@ -55,9 +81,10 @@ export class ScoreboardComponent {
     });
   }
 
-  addExtra(type: string) {
+  async addExtra(type: string) {
     this.runs++;
     this.addBallSymbol(type);
+    await this.saveBall(type);
   }
 
   checkOverEnd() {
@@ -126,6 +153,20 @@ export class ScoreboardComponent {
       }
       this.dialogRef = undefined;
     });
+  }
+
+  private async saveBall(result: string) {
+    if (this.currentMatchId) {
+      await this.databaseService.saveBall(this.currentMatchId, this.overs, this.ballsInCurrentOver, result);
+    }
+  }
+
+  private async saveCurrentState() {
+    if (this.currentMatchId) {
+      // Update match
+      // Note: For simplicity, we're not updating existing records, just saving new balls
+      // In a full implementation, you'd update the match record too
+    }
   }
 
   dialogRef?: any; // Add this property to your class
