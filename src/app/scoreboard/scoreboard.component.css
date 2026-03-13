@@ -1,0 +1,117 @@
+.scoreboard {
+  width: 380px;
+  margin: 20px auto;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: #e8b3e6;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+.team {
+  background-color: red;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.overs {
+  background-color: navy;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.score, .overs {
+  background: #e6a8d7;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.batter-section .batter {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.batter.active {
+  background: #55c3ff;
+}
+
+.batter {
+  background: #ccc;
+}
+
+.bowling-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.ball {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background: #234b66;
+  color: white;
+  border-radius: 50%;
+  line-height: 28px;
+  margin-right: 4px;
+}
+
+.out-box {
+  background: #d0e0ee;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.bowler-section {
+  margin-top: 8px;
+  background: #55c3ff;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.extras, .runs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.extras button, .runs button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.wd { background: #ffc107; }
+.nb { background: #d32f2f; color: #fff; }
+.ext { background: #cfd8dc; }
+.zero { background: #d0e0ee; }
+
+.run-4 { background: #a5d6a7; }
+.run-6 { background: #2e7d32; color: white; }
+
+.over-end button {
+  background: #fbc02d;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+}

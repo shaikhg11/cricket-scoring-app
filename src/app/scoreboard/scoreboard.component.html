@@ -1,0 +1,54 @@
+<div class="scoreboard">
+  <div class="header">
+    <div class="team">{{ team }}</div>
+    <div class="score">{{ runs }}/{{ wickets }}</div>
+    <div class="overs">{{ overs }}.{{ ballsInCurrentOver }} Overs</div>
+  </div>
+
+  <div class="batter-section">
+    <div class="batter active">
+      <span>{{ striker.name }}</span>
+      <button (click)="customizeName('striker')">✎</button>
+      <span class="stats">{{ striker.runs }}({{ striker.balls }})</span>
+    </div>
+    <div class="batter">
+      <span>{{ nonStriker.name }}</span>
+      <button (click)="customizeName('nonStriker')">✎</button>
+      <span class="stats">{{ nonStriker.runs }}({{ nonStriker.balls }})</span>
+    </div>
+  </div>
+
+  <div class="bowling-section">
+    <div class="balls">
+      <span class="ball" *ngFor="let b of recentBalls">{{ b }}</span>
+    </div>
+    <div class="out-box">OUT</div>
+  </div>
+
+  <div class="bowler-section">
+    <div class="bowler">
+      {{ bowler }}
+      <button (click)="customizeName('bowler')">✎</button>
+    </div>
+  </div>
+
+  <div class="extras">
+    <button class="wd" (click)="addExtra('WD')">WD</button>
+    <button class="nb" (click)="addExtra('NB')">NB</button>
+    <button class="ext" (click)="addExtra('EXT')">EXT</button>
+    <button class="zero" (click)="addRuns(0)">0</button>
+  </div>
+
+  <div class="runs">
+    <button (click)="addRuns(1)">1</button>
+    <button (click)="addRuns(2)">2</button>
+    <button (click)="addRuns(3)">3</button>
+    <button class="run-4" (click)="addRuns(4)">4</button>
+    <button (click)="addRuns(5)">5</button>
+    <button class="run-6" (click)="addRuns(6)">6</button>
+  </div>
+
+  <div class="over-end">
+    <button (click)="addWicket()">WICKET</button>
+  </div>
+</div>
